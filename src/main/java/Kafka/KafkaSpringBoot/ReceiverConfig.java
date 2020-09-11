@@ -1,6 +1,7 @@
 package Kafka.KafkaSpringBoot;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,9 @@ public class ReceiverConfig {
         ConcurrentKafkaListenerContainerFactory<String, MessageSample> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setErrorHandler((Exception e, ConsumerRecord<?, ?> consumerRecord) -> {
+            System.out.println("incorrectInput");
+        });
         return factory;
     }
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.Payload;
 
 @SpringBootApplication
 public class KafkaSpringBootApplication {
@@ -22,7 +21,7 @@ public class KafkaSpringBootApplication {
     private Sender sender;
 
     @KafkaListener(topics = topicFrom)
-    public void receive(@Payload MessageSample data) {
+    public void receive(MessageSample data) {
         LOG.info("received data from {} = '{}'", topicFrom, data);
         sender.send(data, topicTo);
     }

@@ -1,8 +1,8 @@
 package Kafka.KafkaSpringBoot;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -17,17 +17,22 @@ import java.util.Map;
 @Configuration
 public class ReceiverConfig {
     private final String bootstrapServer = "localhost:9092";
+    private final CustomHandler customHandler;
+
+    @Autowired
+    public ReceiverConfig(CustomHandler customHandler) {
+        this.customHandler = customHandler;
+    }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, MessageSample> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, MessageSample> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setErrorHandler((Exception e, ConsumerRecord<?, ?> consumerRecord) -> {
-            System.out.println("incorrectInput");
-        });
+        factory.setErrorHandler(customHandler);
         return factory;
     }
+
 
     @Bean
     public ConsumerFactory<String, MessageSample> consumerFactory() {

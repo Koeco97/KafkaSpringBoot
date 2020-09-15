@@ -33,17 +33,15 @@ public class ReceiverConfig {
         return factory;
     }
 
-
-    @Bean
-    public ConsumerFactory<String, MessageSample> consumerFactory() {
+    private ConsumerFactory<String, MessageSample> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(
                 consumerConfigs(),
                 new StringDeserializer(),
                 new JsonDeserializer<>(MessageSample.class));
     }
 
-    @Bean
-    public Map<String, Object> consumerConfigs() {
+
+    private Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");

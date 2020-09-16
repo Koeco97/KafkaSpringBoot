@@ -10,8 +10,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 @SpringBootApplication
 public class KafkaSpringBootApplication {
     private static final Logger LOG = LoggerFactory.getLogger(MessageSample.class);
-    private static final String topicFrom = "topic1";
-    private static final String topicTo = "topic2";
+    private static final String TOPIC_FROM = "topic1";
+    private static final String TOPIC_TO = "topic2";
 
     public static void main(String[] args) {
         SpringApplication.run(KafkaSpringBootApplication.class, args);
@@ -20,9 +20,9 @@ public class KafkaSpringBootApplication {
     @Autowired
     private Sender sender;
 
-    @KafkaListener(topics = topicFrom)
+    @KafkaListener(topics = TOPIC_FROM)
     public void receive(MessageSample data) {
-        LOG.info("received data from {} = '{}'", topicFrom, data);
-        sender.send(data, topicTo);
+        LOG.info("received data from {} = '{}'", TOPIC_FROM, data);
+        sender.send(data, TOPIC_TO);
     }
 }

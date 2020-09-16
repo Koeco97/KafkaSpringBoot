@@ -4,6 +4,7 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.listener.ErrorHandler;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CustomHandler implements ErrorHandler {
 
     @Bean
+    @Primary
     public CustomHandler getCustomHandler() {
         return new CustomHandler();
     }

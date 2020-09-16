@@ -9,12 +9,18 @@ import java.time.LocalDateTime;
 
 @Service
 public class Sender {
+    private final KafkaTemplate<String, MessageSample> kafkaTemplate;
+
     @Autowired
-    private KafkaTemplate<String, MessageSample> kafkaTemplate;
+    public Sender(KafkaTemplate<String, MessageSample> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     public void send(MessageSample data, String topic) {
         data.setHandledTimestamp(LocalDateTime.now().toString());
         ProducerRecord<String, MessageSample> record = new ProducerRecord<>(topic, data);
         kafkaTemplate.send(record);
     }
+
+
 }

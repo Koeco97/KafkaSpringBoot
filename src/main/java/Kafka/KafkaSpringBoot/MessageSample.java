@@ -1,16 +1,8 @@
 package Kafka.KafkaSpringBoot;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Setter
-@Getter
+@Data
 public class MessageSample {
     private String firstName;
     private String lastName;
